@@ -45,6 +45,16 @@ nothing to install first. The data is wiped on every restart. The H2 console is
 at http://localhost:8080/h2-console (JDBC URL `jdbc:h2:mem:contactsdb`, user
 `sa`, no password).
 
+On the dev profile a demo account is created automatically, already populated
+with twelve contacts so the list, paging and search have something to show:
+
+| Email | Password |
+| --- | --- |
+| `demo@example.com` | `password123` |
+
+You can register your own account instead; either works. The seeding only
+happens on the dev profile, so this account never exists in a real database.
+
 ### Frontend
 
 ```bash
