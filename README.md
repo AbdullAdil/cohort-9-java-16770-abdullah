@@ -100,7 +100,5 @@ login.
 
 `mvnw verify` produces a JaCoCo coverage report, and GitHub Actions runs the
 build, the tests, and the frontend lint on every push. SonarCloud analysis runs
-too once these are set on the repository:
-
-- secret `SONAR_TOKEN`
-- variables `SONAR_ORGANIZATION` and `SONAR_PROJECT_KEY`
+too, as long as a `SONAR_TOKEN` secret is set on the repository; the project and
+organization keys are in `backend/pom.xml`.

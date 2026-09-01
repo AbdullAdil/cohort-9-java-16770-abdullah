@@ -29,7 +29,8 @@
 	<properties>
 		<java.version>21</java.version>
 		<jacoco.version>0.8.15</jacoco.version>
-		<sonar.organization>${env.SONAR_ORGANIZATION}</sonar.organization>
+		<sonar.organization>abdulladil</sonar.organization>
+		<sonar.projectKey>AbdullAdil_cohort-9-java-16770-abdullah</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!-- Tell Sonar where JaCoCo writes the coverage report. -->
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
