@@ -33,6 +33,16 @@ docker-compose.yml   SQL Server for local development
 You need JDK 21+ and Node 20+. Both parts run at the same time, in two
 terminals.
 
+> **On Windows / PowerShell**, use `.\mvnw.cmd` instead of `./mvnw`, and
+> `npm.cmd` instead of `npm` (PowerShell blocks the `npm.ps1` wrapper by
+> default). Set environment variables with `$env:NAME="value"` rather than
+> inline, for example:
+>
+> ```powershell
+> $env:JAVA_HOME="C:\path\to\jdk-21"
+> .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
+> ```
+
 ### Backend
 
 ```bash
@@ -100,6 +110,13 @@ committed to the repo:
 
 ```bash
 cd backend && set -a && . ../.env && set +a && ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+```
+
+On PowerShell, load the `.env` values first and then start it:
+
+```powershell
+Get-Content .env | ForEach-Object { if ($_ -match '^(.+?)=(.*)$') { Set-Item "env:$($Matches[1])" $Matches[2] } }
+cd backend; .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=prod"
 ```
 
 ## Tests
