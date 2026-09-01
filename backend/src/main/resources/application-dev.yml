@@ -15,6 +15,10 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  flyway:
+    # The migrations are written for SQL Server, so dev lets Hibernate build
+    # the H2 schema from the entities instead of running them.
+    enabled: false
 
 logging:
   level:
