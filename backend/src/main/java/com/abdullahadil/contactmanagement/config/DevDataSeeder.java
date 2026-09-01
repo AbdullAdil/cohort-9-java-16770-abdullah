@@ -31,6 +31,22 @@ public class DevDataSeeder implements CommandLineRunner {
     private static final String DEMO_EMAIL = "demo@example.com";
     private static final String DEMO_PASSWORD = "password123";
 
+    // "first last title", with the title's spaces written as hyphens.
+    // Enough contacts to push the list onto a second page.
+    private static final List<String> DEMO_PEOPLE = List.of(
+            "Ayesha Khan Product-Designer",
+            "Bilal Ahmed Software-Engineer",
+            "Sana Malik Project-Manager",
+            "Hamza Iqbal QA-Engineer",
+            "Zara Sheikh Data-Analyst",
+            "Usman Raza DevOps-Engineer",
+            "Fatima Noor UX-Researcher",
+            "Omar Siddiqui Business-Analyst",
+            "Hina Aslam Scrum-Master",
+            "Danish Qureshi Backend-Engineer",
+            "Maryam Javed Frontend-Engineer",
+            "Tariq Mahmood Solutions-Architect");
+
     private final UserRepository userRepository;
     private final ContactRepository contactRepository;
     private final PasswordEncoder passwordEncoder;
@@ -54,40 +70,27 @@ public class DevDataSeeder implements CommandLineRunner {
                 .passwordHash(passwordEncoder.encode(DEMO_PASSWORD))
                 .build());
 
-        // Enough contacts to push the list onto a second page.
-        List<String[]> people = List.of(
-                new String[]{"Ayesha", "Khan", "Product Designer"},
-                new String[]{"Bilal", "Ahmed", "Software Engineer"},
-                new String[]{"Sana", "Malik", "Project Manager"},
-                new String[]{"Hamza", "Iqbal", "QA Engineer"},
-                new String[]{"Zara", "Sheikh", "Data Analyst"},
-                new String[]{"Usman", "Raza", "DevOps Engineer"},
-                new String[]{"Fatima", "Noor", "UX Researcher"},
-                new String[]{"Omar", "Siddiqui", "Business Analyst"},
-                new String[]{"Hina", "Aslam", "Scrum Master"},
-                new String[]{"Danish", "Qureshi", "Backend Engineer"},
-                new String[]{"Maryam", "Javed", "Frontend Engineer"},
-                new String[]{"Tariq", "Mahmood", "Solutions Architect"});
-
-        for (String[] person : people) {
+        for (int i = 0; i < DEMO_PEOPLE.size(); i++) {
+            String[] person = DEMO_PEOPLE.get(i).split(" ");
             String first = person[0];
             String last = person[1];
+            String title = person[2].replace('-', ' ');
 
             Contact contact = new Contact();
             contact.setOwner(demo);
             contact.setFirstName(first);
             contact.setLastName(last);
-            contact.setTitle(person[2]);
+            contact.setTitle(title);
 
             String handle = (first + "." + last).toLowerCase();
             contact.addEmail(new ContactEmail(ContactLabel.WORK, handle + "@company.com"));
             contact.addEmail(new ContactEmail(ContactLabel.PERSONAL, handle + "@example.com"));
-            contact.addPhone(new ContactPhone(ContactLabel.WORK, "021-111-" + (1000 + people.indexOf(person))));
-            contact.addPhone(new ContactPhone(ContactLabel.HOME, "0300-555-" + (1000 + people.indexOf(person))));
+            contact.addPhone(new ContactPhone(ContactLabel.WORK, "021-111-" + (1000 + i)));
+            contact.addPhone(new ContactPhone(ContactLabel.HOME, "0300-555-" + (1000 + i)));
 
             contactRepository.save(contact);
         }
 
-        log.info("Seeded demo account {} with {} contacts", DEMO_EMAIL, people.size());
+        log.info("Seeded demo account {} with {} contacts", DEMO_EMAIL, DEMO_PEOPLE.size());
     }
 }
