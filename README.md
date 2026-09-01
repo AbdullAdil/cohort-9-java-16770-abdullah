@@ -1,5 +1,9 @@
 # Contact Management System
 
+[![Build](https://github.com/AbdullAdil/cohort-9-java-16770-abdullah/actions/workflows/build.yml/badge.svg)](https://github.com/AbdullAdil/cohort-9-java-16770-abdullah/actions/workflows/build.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AbdullAdil_cohort-9-java-16770-abdullah&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AbdullAdil_cohort-9-java-16770-abdullah)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AbdullAdil_cohort-9-java-16770-abdullah&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AbdullAdil_cohort-9-java-16770-abdullah)
+
 Cohort 9 — JAVA Fullstack (JAVA+ReactJS) assignment for Abdullah Adil.
 
 A web app where users register, sign in, and manage their own contacts. Each
