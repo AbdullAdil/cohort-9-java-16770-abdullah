@@ -22,7 +22,7 @@ SQL Server (H2 for local development).
 
 ## Layout
 
-```
+```text
 backend/    Spring Boot API
 frontend/   React single page app
 docker-compose.yml   SQL Server for local development
@@ -60,24 +60,36 @@ no CORS setup in development. If the backend is on a different port, set
 ### Running against SQL Server
 
 The `prod` profile targets SQL Server, and Flyway creates the schema from
-`backend/src/main/resources/db/migration`. Start the database with Docker:
+`backend/src/main/resources/db/migration`.
+
+Put the credentials in a `.env` file in the repository root, so they stay out of
+your shell history. The file is gitignored:
+
+```dotenv
+SA_PASSWORD=choose-a-strong-password
+DB_USERNAME=sa
+DB_PASSWORD=choose-a-strong-password
+JWT_SECRET=a-long-random-secret-at-least-32-characters
+```
+
+Docker Compose picks that up on its own:
 
 ```bash
-SA_PASSWORD='YourStrong@Passw0rd' docker compose up -d
+docker compose up -d
 ```
 
 Wait for it to finish starting, then create the (empty) database. Flyway builds
 the tables, but it can't create the database itself:
 
 ```bash
-docker exec contact-management-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Passw0rd' -C -Q "IF DB_ID('contactsdb') IS NULL CREATE DATABASE contactsdb;"
+docker exec -e SA_PASSWORD contact-management-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$SA_PASSWORD" -C -Q "IF DB_ID('contactsdb') IS NULL CREATE DATABASE contactsdb;"
 ```
 
-Then run the backend with the credentials passed in (they have no defaults, so
-nothing usable is committed to the repo):
+Then run the backend. The credentials have no defaults, so nothing usable is
+committed to the repo:
 
 ```bash
-cd backend && DB_USERNAME=sa DB_PASSWORD='YourStrong@Passw0rd' JWT_SECRET='a-long-random-secret-at-least-32-characters' ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+cd backend && set -a && . ../.env && set +a && ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
 ```
 
 ## Tests
