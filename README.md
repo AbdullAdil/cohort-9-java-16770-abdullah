@@ -59,11 +59,18 @@ no CORS setup in development. If the backend is on a different port, set
 
 ### Running against SQL Server
 
-The `prod` profile targets SQL Server and Flyway creates the schema. Start the
-database with Docker:
+The `prod` profile targets SQL Server, and Flyway creates the schema from
+`backend/src/main/resources/db/migration`. Start the database with Docker:
 
 ```bash
 SA_PASSWORD='YourStrong@Passw0rd' docker compose up -d
+```
+
+Wait for it to finish starting, then create the (empty) database. Flyway builds
+the tables, but it can't create the database itself:
+
+```bash
+docker exec contact-management-sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'YourStrong@Passw0rd' -C -Q "IF DB_ID('contactsdb') IS NULL CREATE DATABASE contactsdb;"
 ```
 
 Then run the backend with the credentials passed in (they have no defaults, so
